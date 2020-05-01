@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - master_za
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python
+      uses: actions/setup-python@v1
+    - uses: yaananth/run-notebook@v1
+      with:
+        notebook: "Realtime_R0_World.ipynb"
+        #params: "PATHTOPARAMS.json"
+        isReport: False
+        poll: True
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: calculated_rt
+        path: data/covid19za_provincial_confirmed_rt.csv
