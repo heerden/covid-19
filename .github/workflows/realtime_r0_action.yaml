@@ -18,7 +18,9 @@ jobs:
       uses: actions/setup-python@v1
 
     - name: Ensure Data Directory Exists
-      run: mkdir -p data/calc
+      run: |
+        mkdir -p data/calc
+        ls
 
     - name: Setup Python Dependencies
       run: |
