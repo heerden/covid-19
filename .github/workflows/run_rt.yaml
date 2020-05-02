@@ -37,6 +37,6 @@ jobs:
         author_name: Schalk
         author_email: schalkv@heerden.com
         message: "Rt notebook run"
-        add: "data/world.txt data/testdata.csv"
+        add: "data/testdata.csv"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
