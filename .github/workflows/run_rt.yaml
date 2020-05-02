@@ -9,15 +9,36 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
-      uses: actions/setup-python@v1
+
+    - run: mkdir -p data
+
+    - uses: actions/setup-python@v1
+
     - uses: yaananth/run-notebook@v1
+      env:
+        RUNNER: ${{ toJson(runner) }}
+        SECRETS: ${{ toJson(secrets) }}
+        GITHUB: ${{ toJson(github) }}
       with:
-        notebook: "Realtime_R0_World.ipynb"
-        #params: "PATHTOPARAMS.json"
+        notebook: "zaDataTest.ipynb"
+        params: ""
         isReport: False
         poll: True
-    - uses: actions/upload-artifact@v2
+
+    - uses: actions/upload-artifact@master
       if: always()
       with:
-        name: calculated_rt
-        path: data/covid19za_provincial_confirmed_rt.csv
+        name: output
+        path: ${{ RUNNER.temp }}/nb-runner
+      env:
+        RUNNER: ${{ toJson(runner) }}
+
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v4
+      with:
+        author_name: Schalk
+        author_email: schalkv@heerden.com
+        message: "Rt notebook run"
+        add: "data/world.txt data/testdata.csv"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
