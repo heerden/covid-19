@@ -1,7 +1,12 @@
 on:
+  #push
   push:
     branches:
       - master_za
+    #tags:
+    #  - dailyfinal
+    #paths:
+    #  - data/covid19za_provincial_cumulative_timeline_confirmed.csv
 
 jobs:
   run:
@@ -12,31 +17,27 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v1
 
-    - uses: yaananth/run-notebook@v1
+    - name: Ensure data directory exist
+      - run: mkdir -p data/calc
+
+    - name: Run Jupyter notebook and export csv
+      uses: yaananth/run-notebook@v1
       env:
         RUNNER: ${{ toJson(runner) }}
         SECRETS: ${{ toJson(secrets) }}
         GITHUB: ${{ toJson(github) }}
       with:
-        notebook: "zaDataTest.ipynb"
+        notebook: "Realtime R0 ZA.ipynb"
         params: ""
         isReport: False
         poll: True
 
-    - uses: actions/upload-artifact@master
-      if: always()
-      with:
-        name: output
-        path: ${{ RUNNER.temp }}/nb-runner
-      env:
-        RUNNER: ${{ toJson(runner) }}
-
-    - name: Commit changes
+    - name: Commit csv changes
       uses: EndBug/add-and-commit@v4
       with:
         author_name: Schalk
         author_email: schalkv@heerden.com
         message: "Rt notebook run"
-        add: "data/testdata.csv"
+        add: "data/calc/calculated_r0_sa_provincial_cumulative.csv"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
