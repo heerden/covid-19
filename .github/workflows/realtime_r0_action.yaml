@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-python@v1
 
     - name: Ensure data directory exist
-      - run: mkdir -p data/calc
+      run: mkdir -p data/calc
 
     - name: Run Jupyter notebook and export csv
       uses: yaananth/run-notebook@v1
