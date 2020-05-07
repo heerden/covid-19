@@ -46,6 +46,6 @@ jobs:
         author_email: schalkv@heerden.com
         message: "Rt action run"
         #'calculated_r0_sa_provincial_cumulative.csv'
-        add: "data/calc"
+        add: "data/calc/calculated_rt_sa_provincial_cumulative.csv"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
