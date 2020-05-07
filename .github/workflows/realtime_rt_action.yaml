@@ -44,7 +44,8 @@ jobs:
       with:
         author_name: "Schalk van Heerden"
         author_email: schalkv@heerden.com
-        message: "Ro notebook action run"
-        add: "data/calc/calculated_r0_sa_provincial_cumulative.csv"
+        message: "Rt action run"
+        #'calculated_r0_sa_provincial_cumulative.csv'
+        add: "data/calc/*"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
