@@ -1,0 +1,30 @@
+on:
+  push:
+    branches: 
+      - master
+       
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+          
+    - run: mkdir -p data
+
+    - run: echo hello > data/world.txt
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: path/to/artifact/world.txt
+        
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v4
+      with:
+        author_name: Schalk
+        author_email: schalkv@heerden.com
+        message: "Rt notebook run"
+        add: "data/world.txt"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
